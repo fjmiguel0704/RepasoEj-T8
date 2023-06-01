@@ -1,6 +1,6 @@
 package ejercicio1;
 
-public class Producto {
+public class Producto implements Comparable<Producto> {
 
 	/**
 	 * Nombre del producto
@@ -31,6 +31,14 @@ public class Producto {
 		}
 		if (precio > 0) {
 			this.precio = precio;
+		}
+
+	}
+
+	public Producto(String nombre) {
+		super();
+		if (nombre != null && !nombre.isEmpty()) {
+			this.nombre = nombre;
 		}
 
 	}
@@ -81,8 +89,7 @@ public class Producto {
 	@Override
 	public String toString() {
 		String result;
-		result = "Nombre producto: " + nombre + 
-				"\n" + "Precio: " + precio;
+		result = "Nombre producto: " + nombre + "\n" + "Precio: " + precio;
 		return result;
 	}
 
@@ -94,6 +101,23 @@ public class Producto {
 	 */
 	protected double calcular(int cantidad) {
 		return precio * cantidad;
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		boolean estado = false;
+		Producto p = (Producto) o;
+		if (this.nombre.equals(p.nombre)) {
+			estado = true;
+		}
+		return estado;
+	}
+
+	@Override
+	public int compareTo(Producto p) {
+		int result = 0;
+		result = this.nombre.compareTo(p.nombre);
+		return result;
 	}
 
 }

@@ -13,7 +13,7 @@ public class Perecedero extends Producto {
 	 * @param nombre
 	 * @param precio
 	 */
-	public Perecedero(int diasCaducar, String nombre, double precio) {
+	public Perecedero(String nombre, double precio, int diasCaducar) {
 		super(nombre, precio);
 		if (diasCaducar > 0) {
 			this.diasCaducar = diasCaducar;
@@ -36,7 +36,10 @@ public class Perecedero extends Producto {
 	 * @param diasCaducar
 	 */
 	public void setDiasCaducar(int diasCaducar) {
-		this.diasCaducar = diasCaducar;
+			if (diasCaducar>0) {
+				this.diasCaducar = diasCaducar;
+			}
+		
 	}
 
 	/**
@@ -55,15 +58,15 @@ public class Perecedero extends Producto {
 	 */
 	@Override
 	public double calcular(int cantidad) {
-		double result = 0;
-		if (cantidad == 1) {
-			result = super.calcular(cantidad) / 4;
-		} else if (cantidad == 2) {
-			result = super.calcular(cantidad) / 3;
+		double result = super.calcular(cantidad);
+		if (diasCaducar == 1) {
+			result /= 4;
+		} else if (diasCaducar == 2) {
+			result /= 3;
 		}
 
-		else if (cantidad == 3) {
-			result = super.calcular(cantidad) / 2;
+		else if (diasCaducar == 3) {
+			result /= 2;
 		}
 
 		return result;

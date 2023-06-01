@@ -13,7 +13,7 @@ public class NoPerecedero extends Producto {
 	 * @param nombre
 	 * @param precio
 	 */
-	public NoPerecedero(String tipo, String nombre, double precio) {
+	public NoPerecedero(String nombre, double precio, String tipo) {
 		super(nombre, precio);
 		if (tipo != null && !tipo.isEmpty()) {
 			this.tipo = tipo;
@@ -35,7 +35,10 @@ public class NoPerecedero extends Producto {
 	 * @param tipo
 	 */
 	public void setTipo(String tipo) {
-		this.tipo = tipo;
+		if (tipo!=null&&!tipo.isEmpty()) {
+			this.tipo = tipo;
+		}
+		
 	}
 
 	/**
@@ -46,13 +49,5 @@ public class NoPerecedero extends Producto {
 		result = super.toString() + 
 				"\n" + "Dias a caducar: " + tipo;
 		return result;
-	}
-
-	/**
-	 * Devuelve el precio total de una cantidad de productos
-	 */
-	@Override
-	public double calcular(int cantidad) {
-		return super.calcular(cantidad);
 	}
 }
