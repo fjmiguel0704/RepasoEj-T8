@@ -11,10 +11,10 @@ public class Main {
 	static int diasCaducaProducto;
 	static String tipoProductoNoPere;
 	static TreeSet<Producto> collection = new TreeSet<Producto>();
+	static Scanner read = new Scanner(System.in);
 
 	public static void main(String[] args) {
 		int opc;
-		Scanner read = new Scanner(System.in);
 
 		do {
 			menu();
