@@ -31,8 +31,10 @@ public class Main {
 					System.out.println("Precio del producto: ");
 					precio = read.nextDouble();
 					read.nextLine();
-					System.out.println("Es un producto perecedero (Si|No):  ");
-					respPere = read.next();
+					do {
+						System.out.println("Es un producto perecedero (Si|No):  ");
+						respPere = read.next();
+					} while (!respPere.equals("Si") && !respPere.equals("No"));
 					tipoProducto(nombre, precio, respPere, read);
 				} else {
 					System.out.println("Ya existe");
@@ -70,27 +72,27 @@ public class Main {
 	}
 
 	private static void tipoProducto(String nombre, double precio, String respPere, Scanner read) {
+		Producto product = null;
 		switch (respPere) {
 		case "Si":
 			System.out.println("Dias a caducar del producto: ");
 			diasCaducaProducto = read.nextInt();
 			read.nextLine();
-			Perecedero pere = new Perecedero(nombre, precio, diasCaducaProducto);
-			if (collection.add(pere)) {
-				System.out.println("Agregado correctamente");
-			}
+			product = new Perecedero(nombre, precio, diasCaducaProducto);
+
 			break;
 		case "No":
 			System.out.println("Tipo de producto: ");
 			tipoProductoNoPere = read.next();
-			NoPerecedero noPere = new NoPerecedero(nombre, precio, tipoProductoNoPere);
-			if (collection.add(noPere)) {
-				System.out.println("Agregado correctamente");
-			}
+			product = new NoPerecedero(nombre, precio, tipoProductoNoPere);
 			break;
 		default:
 			System.out.println("Opción incorrecta");
 		}
+		if (collection.add(product)) {
+			System.out.println("Agregado correctamente");
+		}
+
 	}
 
 	private static void menu() {
