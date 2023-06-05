@@ -83,15 +83,26 @@ public class Main {
 			case 3:
 				eliminarProducto(read);
 				break;
-			// En el caso 4, nos salimos del programa
+			// En el caso 4, modificaremos un producto
 			case 4:
+				System.out.println("Nombre del producto a modificar: ");
+				nombre = read.next();
+				read.nextLine();
+				Producto prod = new Producto(nombre);
+				if (collection.contains(prod)) {
+					System.out.println("Nuevo precio del producto: ");
+					precio = read.nextDouble();
+					read.nextLine();
+				}
+				// En el caso 0, nos salimos del programa
+			case 0:
 				System.out.println("Saliendo...");
 				break;
 			// Si la opción no es correcta, mostramos un mensaje
 			default:
 				System.out.println("Opción incorrecta");
 			}
-		} while (opc != 4);
+		} while (opc != 0);
 
 	}
 
@@ -125,6 +136,7 @@ public class Main {
 	 * @param read
 	 */
 	private static void tipoProducto(String nombre, double precio, String respPere, Scanner read) {
+		boolean estado = false;
 		Producto product = null;
 		switch (respPere) {
 		case "Si":
@@ -132,7 +144,6 @@ public class Main {
 			diasCaducaProducto = read.nextInt();
 			read.nextLine();
 			product = new Perecedero(nombre, precio, diasCaducaProducto);
-
 			break;
 		case "No":
 			System.out.println("Tipo de producto: ");
@@ -145,7 +156,6 @@ public class Main {
 		if (collection.add(product)) {
 			System.out.println("Agregado correctamente");
 		}
-
 	}
 
 	/**
@@ -158,7 +168,8 @@ public class Main {
 		System.out.println("1. Añadir producto");
 		System.out.println("2. Listar productos");
 		System.out.println("3. Eliminar producto");
-		System.out.println("4. Salir");
+		System.out.println("4. Modificar");
+		System.out.println("0. Salir");
 		System.out.println();
 		System.out.println("Selecciona una opción: ");
 	}
