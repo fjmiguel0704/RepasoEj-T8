@@ -89,12 +89,13 @@ public class Main {
 				nombre = read.next();
 				read.nextLine();
 				Producto prod = new Producto(nombre);
-				if (collection.contains(prod)) {
-					System.out.println("Nuevo precio del producto: ");
-					precio = read.nextDouble();
-					read.nextLine();
+				if (!collection.contains(prod)) {
+					System.out.println("El producto no existe");
+				} else {
+					modificar(prod);
 				}
-				// En el caso 0, nos salimos del programa
+				break;
+			// En el caso 0, nos salimos del programa
 			case 0:
 				System.out.println("Saliendo...");
 				break;
@@ -104,6 +105,29 @@ public class Main {
 			}
 		} while (opc != 0);
 
+	}
+
+	private static void modificar(Producto prod) {
+		for (Producto pd : collection) {
+			if (pd.equals(prod)) {
+				System.out.println("Nuevo precio del producto: ");
+				precio = read.nextDouble();
+				read.nextLine();
+				if (pd instanceof Perecedero) {
+					System.out.println("Dias a caducar modificado: ");
+					diasCaducaProducto = read.nextInt();
+					read.nextLine();
+					((Perecedero) pd).setDiasCaducar(diasCaducaProducto);
+					pd.setPrecio(precio);
+				} else if (pd instanceof NoPerecedero) {
+					System.out.println("Tipo de producto a modificar: ");
+					tipoProductoNoPere = read.next();
+					read.nextLine();
+					((NoPerecedero) pd).setTipo(tipoProductoNoPere);
+					pd.setPrecio(precio);
+				}
+			}
+		}
 	}
 
 	/**
@@ -126,7 +150,7 @@ public class Main {
 	}
 
 	/**
-	 * Este métpdo pide al usuario unos datos u otro según si el producto es
+	 * Este método pide al usuario unos datos u otro según si el producto es
 	 * perecedero o no. Después de recibirlos añadirá el nuevo producto resgitrado a
 	 * la coleccion
 	 * 
