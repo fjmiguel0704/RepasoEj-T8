@@ -107,6 +107,14 @@ public class Main {
 
 	}
 
+	/**
+	 * Este método recorre la colección y comprueba que el producto a modificar se
+	 * encuentra. Si existe, mostrará un menú de opciones sobre el que desea
+	 * modificar acerca de ese producto. Y aplicará los cambios según el tipo de
+	 * producto que sea, si es Perecedero o no.
+	 * 
+	 * @param prod
+	 */
 	private static void modificar(Producto prod) {
 		for (Producto pd : collection) {
 			if (pd.equals(prod)) {
