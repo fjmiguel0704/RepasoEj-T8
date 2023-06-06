@@ -47,7 +47,7 @@ public class NoPerecedero extends Producto {
 	public String toString() {
 		String result;
 		result = super.toString() + 
-				"\n" + "Dias a caducar: " + tipo;
+				"\n" + "Tipo de producto: " + tipo;
 		return result;
 	}
 }
