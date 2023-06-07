@@ -1,6 +1,10 @@
 package ejercicio1;
 
-import java.awt.Component.BaselineResizeBehavior;
+import java.io.BufferedWriter;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Scanner;
 import java.util.TreeSet;
 
@@ -37,7 +41,7 @@ public class Main {
 	public static void main(String[] args) {
 		// Opción elegida del menú de opciones
 		int opc;
-
+		leerFichero(collection);
 		do {
 			// Mostramos el menú
 			menu();
@@ -62,7 +66,7 @@ public class Main {
 					read.nextLine();
 					do {
 						// Preguntamos si es o no un producto perecedero y leemos la respuesta
-						System.out.println("Es un producto perecedero (Si|No):  ");
+						System.out.println("Es un producto perecedero (Si|No): ");
 						respPere = read.next();
 					} while (!respPere.equals("Si") && !respPere.equals("No"));
 					// Llamamos al método que solicita datos según si es perecedero o no
@@ -95,6 +99,10 @@ public class Main {
 					modificar(prod);
 				}
 				break;
+			// En el caso 5, guardará el contenido de la colección en un fichero
+			case 5:
+				guardarFichero(collection);
+				break;
 			// En el caso 0, nos salimos del programa
 			case 0:
 				System.out.println("Saliendo...");
@@ -107,6 +115,46 @@ public class Main {
 
 	}
 
+	private static TreeSet<Producto> leerFichero() {
+		try {
+			String linea = "";
+			Scanner sc = new Scanner(new FileReader("src\\ejercicio1\\productos.txt"));
+			String[] products;
+			while (sc.hasNextLine()) {
+				linea = sc.nextLine();
+				products = linea.split(";");
+				Double.parseDouble(products[1]);
+				Integer.parseInt(products[2]);
+				Integer.parseInt(products[3]);
+			}
+		} catch (FileNotFoundException e) {
+			System.out.println("Archivo no encontrado");
+			System.out.println(e.getMessage());
+		}
+	}
+
+	private static void guardarFichero(TreeSet<Producto> collec) {
+		try {
+			BufferedWriter bw = new BufferedWriter(new FileWriter("src\\ejercicio1\\productos.txt"));
+			for (Producto valores : collec) {
+				bw.write(valores.getNombre() + ";" + valores.getPrecio() + ";");
+				if (valores instanceof Perecedero) {
+					bw.write(String.valueOf(((Perecedero) valores).getDiasCaducar()));
+				} else if (valores instanceof NoPerecedero) {
+					bw.write(((NoPerecedero) valores).getTipo());
+				}
+				bw.newLine();
+			}
+			bw.flush();
+		} catch (FileNotFoundException e) {
+			System.out.println("Archivo no encontrado");
+			System.out.println(e.getMessage());
+		} catch (IOException e) {
+			System.out.println("Problema entrada/salida");
+			System.out.println(e.getMessage());
+		}
+	}
+
 	/**
 	 * Este método recorre la colección y comprueba que el producto a modificar se
 	 * encuentra. Si existe, mostrará un menú de opciones sobre el que desea
@@ -116,23 +164,58 @@ public class Main {
 	 * @param prod
 	 */
 	private static void modificar(Producto prod) {
+		int opcion;
 		for (Producto pd : collection) {
 			if (pd.equals(prod)) {
-				System.out.println("Nuevo precio del producto: ");
-				precio = read.nextDouble();
-				read.nextLine();
+				System.out.println("1. Modificar precio");
 				if (pd instanceof Perecedero) {
-					System.out.println("Dias a caducar modificado: ");
-					diasCaducaProducto = read.nextInt();
+					System.out.println("2. Modificar dias a caducar");
+					System.out.println();
+					System.out.println("Marque una opción: ");
+					opcion = read.nextInt();
 					read.nextLine();
-					((Perecedero) pd).setDiasCaducar(diasCaducaProducto);
-					pd.setPrecio(precio);
+					switch (opcion) {
+					case 1:
+						System.out.println("Nuevo precio del producto: ");
+						precio = read.nextDouble();
+						read.nextLine();
+						pd.setPrecio(precio);
+						System.out.println("Modificado correctamente");
+						break;
+					case 2:
+						System.out.println("Dias a caducar modificado: ");
+						diasCaducaProducto = read.nextInt();
+						read.nextLine();
+						((Perecedero) pd).setDiasCaducar(diasCaducaProducto);
+						System.out.println("Modificado correctamente");
+					default:
+						System.out.println("Opción incorrecta");
+					}
+
 				} else if (pd instanceof NoPerecedero) {
-					System.out.println("Tipo de producto a modificar: ");
-					tipoProductoNoPere = read.next();
+					System.out.println("2. Modificar tipo de producto");
+					System.out.println();
+					System.out.println("Marque una opción: ");
+					opcion = read.nextInt();
 					read.nextLine();
-					((NoPerecedero) pd).setTipo(tipoProductoNoPere);
-					pd.setPrecio(precio);
+					switch (opcion) {
+					case 1:
+						System.out.println("Nuevo precio del producto: ");
+						precio = read.nextDouble();
+						read.nextLine();
+						pd.setPrecio(precio);
+						System.out.println("Modificado correctamente");
+						break;
+					case 2:
+						System.out.println("Tipo de producto a modificar: ");
+						tipoProductoNoPere = read.next();
+						read.nextLine();
+						((NoPerecedero) pd).setTipo(tipoProductoNoPere);
+						System.out.println("Modificado correctamente");
+					default:
+						System.out.println("Opción incorrecta");
+					}
+
 				}
 			}
 		}
@@ -201,6 +284,7 @@ public class Main {
 		System.out.println("2. Listar productos");
 		System.out.println("3. Eliminar producto");
 		System.out.println("4. Modificar");
+		System.out.println("5. Guardar en fichero");
 		System.out.println("0. Salir");
 		System.out.println();
 		System.out.println("Selecciona una opción: ");
