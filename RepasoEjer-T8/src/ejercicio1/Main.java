@@ -41,7 +41,7 @@ public class Main {
 	public static void main(String[] args) {
 		// Opción elegida del menú de opciones
 		int opc;
-		leerFichero(collection);
+		leerFichero();
 		do {
 			// Mostramos el menú
 			menu();
@@ -125,11 +125,19 @@ public class Main {
 				products = linea.split(";");
 				Double.parseDouble(products[1]);
 				Integer.parseInt(products[2]);
-				Integer.parseInt(products[3]);
+				try {
+					Integer.parseInt(products[3]);
+					Perecedero pdero = new Perecedero(products[0], Double.parseDouble(products[1]),
+							Integer.parseInt(products[2]));
+				} catch (NumberFormatException e) {
+					NoPerecedero npdero = new NoPerecedero(products[0], Double.parseDouble(products[1]), products[2]);
+				}
 			}
 		} catch (FileNotFoundException e) {
 			System.out.println("Archivo no encontrado");
 			System.out.println(e.getMessage());
+		} finally {
+			collection.add(null);
 		}
 	}
 
