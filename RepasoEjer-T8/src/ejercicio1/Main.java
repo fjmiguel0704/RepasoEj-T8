@@ -120,25 +120,25 @@ public class Main {
 			String linea = "";
 			Scanner sc = new Scanner(new FileReader("src\\ejercicio1\\productos.txt"));
 			String[] products;
+			Producto pd=null;
 			while (sc.hasNextLine()) {
 				linea = sc.nextLine();
 				products = linea.split(";");
-				Double.parseDouble(products[1]);
-				Integer.parseInt(products[2]);
 				try {
-					Integer.parseInt(products[3]);
-					Perecedero pdero = new Perecedero(products[0], Double.parseDouble(products[1]),
-							Integer.parseInt(products[2]));
+					Integer.parseInt(products[2]);
+					pd = new Perecedero(products[0], Double.parseDouble(products[1]), Integer.parseInt(products[2]));
 				} catch (NumberFormatException e) {
-					NoPerecedero npdero = new NoPerecedero(products[0], Double.parseDouble(products[1]), products[2]);
+					pd = new NoPerecedero(products[0], Double.parseDouble(products[1]), products[2]);
+				} finally {
+					collection.add(pd);
 				}
 			}
 		} catch (FileNotFoundException e) {
 			System.out.println("Archivo no encontrado");
 			System.out.println(e.getMessage());
-		} finally {
-			collection.add(null);
 		}
+
+		return collection;
 	}
 
 	private static void guardarFichero(TreeSet<Producto> collec) {
