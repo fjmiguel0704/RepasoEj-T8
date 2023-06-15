@@ -120,12 +120,11 @@ public class Main {
 			String linea = "";
 			Scanner sc = new Scanner(new FileReader("src\\ejercicio1\\productos.txt"));
 			String[] products;
-			Producto pd=null;
+			Producto pd = null;
 			while (sc.hasNextLine()) {
 				linea = sc.nextLine();
 				products = linea.split(";");
 				try {
-					Integer.parseInt(products[2]);
 					pd = new Perecedero(products[0], Double.parseDouble(products[1]), Integer.parseInt(products[2]));
 				} catch (NumberFormatException e) {
 					pd = new NoPerecedero(products[0], Double.parseDouble(products[1]), products[2]);

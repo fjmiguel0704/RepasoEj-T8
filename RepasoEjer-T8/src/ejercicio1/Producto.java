@@ -21,8 +21,8 @@ public class Producto implements Comparable<Producto> {
 	/**
 	 * Constructor que asigna valores a nombre y precio tras su comprobación
 	 * 
-	 * @param nombre
-	 * @param precio
+	 * @param nombre nombre del producto
+	 * @param precio precio del producto
 	 */
 	public Producto(String nombre, double precio) {
 		super();
@@ -46,7 +46,7 @@ public class Producto implements Comparable<Producto> {
 	/**
 	 * Devuelve el nombre del producto
 	 * 
-	 * @return el nombre
+	 * @return el nombre del producto
 	 */
 	public String getNombre() {
 		return nombre;
@@ -55,7 +55,7 @@ public class Producto implements Comparable<Producto> {
 	/**
 	 * Modifica el nombre del producto
 	 * 
-	 * @param nombre
+	 * @param nombre nombre del producto
 	 */
 	public void setNombre(String nombre) {
 		if (nombre != null && !nombre.isEmpty()) {
@@ -66,7 +66,7 @@ public class Producto implements Comparable<Producto> {
 	/**
 	 * Devuelve el precio del producto
 	 * 
-	 * @return el precio
+	 * @return el precio del producto
 	 */
 	public double getPrecio() {
 		return precio;
@@ -75,7 +75,7 @@ public class Producto implements Comparable<Producto> {
 	/**
 	 * Modifica el precio del producto
 	 * 
-	 * @param precio
+	 * @param precio precio del producto
 	 */
 	public void setPrecio(double precio) {
 		if (precio > 0) {
@@ -84,7 +84,7 @@ public class Producto implements Comparable<Producto> {
 	}
 
 	/**
-	 * Devuelve el nombre y precio del producto
+	 * Devuelve el nombre y precio del producto en lineas distintas
 	 */
 	@Override
 	public String toString() {
@@ -103,6 +103,10 @@ public class Producto implements Comparable<Producto> {
 		return precio * cantidad;
 	}
 
+	/**
+	 * Comprueba si dos nombres de productos son iguales y devuelve true en caso de
+	 * que lo sean y false en caso contrario
+	 */
 	@Override
 	public boolean equals(Object o) {
 		boolean estado = false;
@@ -113,6 +117,10 @@ public class Producto implements Comparable<Producto> {
 		return estado;
 	}
 
+	/**
+	 * Este método compara los nombres de los prductos y los ordena alfabéticamente
+	 * de menor a mayor
+	 */
 	@Override
 	public int compareTo(Producto p) {
 		int result = 0;
